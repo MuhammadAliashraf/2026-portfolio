@@ -2,13 +2,30 @@ import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { config } from "../config";
 import { Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa6";
+import { MdArrowOutward } from "react-icons/md";
+import ProjectModal from "./ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface Project {
+  id: number;
+  title: string;
+  category: string;
+  technologies: string | string[];
+  image: string;
+  description: string;
+  githubLink?: string;
+  liveLink?: string;
+  youtubeLink?: string;
+}
+
 const Work = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   useEffect(() => {
     // Disable pinning on mobile to allow scrolling
     if (window.innerWidth <= 768) return;
@@ -66,7 +83,12 @@ const Work = () => {
         </h2>
         <div className="work-flex">
           {config.projects.slice(0, 5).map((project, index) => (
-            <div className="work-box" key={project.id}>
+            <div
+              className="work-box"
+              key={project.id}
+              onClick={() => setSelectedProject(project)}
+              style={{ cursor: "pointer" }}
+            >
               <div className="work-info">
                 <div className="work-title">
                   <h3>0{index + 1}</h3>
@@ -78,6 +100,30 @@ const Work = () => {
                 </div>
                 <h4>Tools and features</h4>
                 <p>{project.technologies}</p>
+                <div className="work-links" onClick={(e) => e.stopPropagation()}>
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-link github-link"
+                      data-cursor="disable"
+                    >
+                      <FaGithub /> GitHub
+                    </a>
+                  )}
+                  {project.liveLink && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-link live-link"
+                      data-cursor="disable"
+                    >
+                      Live Demo <MdArrowOutward />
+                    </a>
+                  )}
+                </div>
               </div>
               <WorkImage image={project.image} alt={project.title} />
             </div>
@@ -94,6 +140,13 @@ const Work = () => {
           </div>
         </div>
       </div>
+
+      {selectedProject && (
+        <ProjectModal
+          project={selectedProject}
+          onClose={() => setSelectedProject(null)}
+        />
+      )}
     </div>
   );
 };
