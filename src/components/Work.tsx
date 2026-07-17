@@ -5,8 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
 import { config } from "../config";
 import { Link } from "react-router-dom";
-import { FaGithub } from "react-icons/fa6";
-import { MdArrowOutward } from "react-icons/md";
+import { FaGithub, FaYoutube } from "react-icons/fa6";
 import ProjectModal from "./ProjectModal";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,6 +24,7 @@ interface Project {
 
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [startWithVideo, setStartWithVideo] = useState(false);
 
   useEffect(() => {
     // Disable pinning on mobile to allow scrolling
@@ -86,7 +86,10 @@ const Work = () => {
             <div
               className="work-box"
               key={project.id}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => {
+                setSelectedProject(project);
+                setStartWithVideo(false);
+              }}
               style={{ cursor: "pointer" }}
             >
               <div className="work-info">
@@ -112,16 +115,19 @@ const Work = () => {
                       <FaGithub /> GitHub
                     </a>
                   )}
-                  {project.liveLink && (
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-link live-link"
+                  {project.youtubeLink && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedProject(project);
+                        setStartWithVideo(true);
+                      }}
+                      className="project-link youtube-link"
                       data-cursor="disable"
+                      style={{ border: "none" }}
                     >
-                      Live Demo <MdArrowOutward />
-                    </a>
+                      <FaYoutube /> Watch Video
+                    </button>
                   )}
                 </div>
               </div>
@@ -144,7 +150,11 @@ const Work = () => {
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
-          onClose={() => setSelectedProject(null)}
+          startWithVideo={startWithVideo}
+          onClose={() => {
+            setSelectedProject(null);
+            setStartWithVideo(false);
+          }}
         />
       )}
     </div>

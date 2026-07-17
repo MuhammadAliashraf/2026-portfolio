@@ -329,6 +329,17 @@ export const config = {
             githubLink: "https://github.com/MuhammadAliashraf",
             liveLink: "https://github.com/MuhammadAliashraf",
             youtubeLink: "https://github.com/MuhammadAliashraf"
+        },
+        {
+            id: 25,
+            title: "SukhanWear POS System",
+            category: "POS System",
+            technologies: "React, Node.js, Express, MongoDB, Tailwind CSS",
+            image: "/images/projects/sukhanwear_pos.png",
+            description: "This is the POS (Point of Sale) System I developed for SukhanWear to simplify daily business operations. The system is designed to make sales management faster, more organized, and user-friendly. Key features include sales invoicing, product & inventory management, customer management, sales history reporting, and dashboard insights.",
+            githubLink: "https://github.com/MuhammadAliashraf",
+            liveLink: "",
+            youtubeLink: "https://www.youtube.com/watch?v=NpikBkLSRrU"
         }
     ],
     contact: {

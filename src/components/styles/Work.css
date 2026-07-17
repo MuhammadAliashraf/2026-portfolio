@@ -381,13 +381,14 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.live-link {
-  background: var(--accentColor);
-  color: #000;
-  border: 1px solid var(--accentColor);
+.youtube-link {
+  background: #ff0000;
+  color: #fff;
+  border: 1px solid #ff0000;
 }
 
-.live-link:hover {
+.youtube-link:hover {
   background: transparent;
-  color: var(--accentColor);
+  color: #ff0000;
+  border-color: #ff0000;
 }
